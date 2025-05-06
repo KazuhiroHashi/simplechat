@@ -18,7 +18,8 @@ def extract_region_from_arn(arn):
 bedrock_client = None
 
 # モデルID
-MODEL_ID = os.environ.get("MODEL_ID", "us.amazon.nova-lite-v1:0")
+#MODEL_ID = os.environ.get("MODEL_ID", "us.amazon.nova-lite-v1:0")
+MODEL_ID = "https://5774-34-125-122-48.ngrok-free.app"
 
 def lambda_handler(event, context):
     try:
@@ -71,14 +72,12 @@ def lambda_handler(event, context):
         
         # invoke_model用のリクエストペイロード
         request_payload = {
-            "messages": bedrock_messages,
-            "inferenceConfig": {
-                "maxTokens": 512,
-                "stopSequences": [],
-                "temperature": 0.7,
-                "topP": 0.9
+            "prompt": "string",
+            "max_new_tokens": 512,
+            "do_sample": true,
+            "temperature": 0.7,
+            "top_p": 0.9
             }
-        }
         
         print("Calling Bedrock invoke_model API with payload:", json.dumps(request_payload))
         
